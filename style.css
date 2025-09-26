@@ -1,0 +1,9 @@
+/* Custom styles for TaskForge */
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+button, select, input {
+  transition: all 0.2s ease;
+}
