@@ -56,7 +56,6 @@ function undoDelete() {
   }
   hideToast();
 }
-
 // ---------------------------
 // RENDER TASKS
 // ---------------------------
@@ -99,7 +98,7 @@ function renderTasks() {
       : "No deadline";
 
     let taskEl = document.createElement("div");
-    taskEl.className = "bg-gray-700 rounded-lg mb-3 flex shadow-md overflow-hidden";
+    taskEl.className = "bg-gray-600 text-gray-900 rounded-lg mb-3 flex shadow-md overflow-hidden";
 
     taskEl.innerHTML = `
       <!-- Priority bar full height -->
