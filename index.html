@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaskForge - To Do List</title>
+  <title>Move It! - To Do List</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -32,7 +32,6 @@
       </button>
     </div>
   </header>
-
 
   <!-- Stats -->
   <section class="p-6 grid grid-cols-4 gap-6">
@@ -130,65 +129,88 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 border-t border-gray-800 p-4 flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <div class="bg-blue-600 p-2 rounded-lg">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M17.414 2.586a2 2 0 00-2.828 0L6 11.172V14h2.828l8.586-8.586a2 2 0 000-2.828z"/>
-        </svg>
+  <footer class="bg-blue-900 border-t border-gray-800 p-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10">
+        <img src="images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
       </div>
-      <span class="text-sm text-gray-400">© 2024 TaskForge. All rights reserved.</span>
-    </div>
-    <div class="flex gap-3 text-gray-400">
-      <span>⚙️</span>
-      <span>🔔</span>
+      <div>
+        <p class="text-gray-200 text-sm">@2025 Move It! All rights reserved.</p>
+      </div>
     </div>
   </footer>
+
 
   <!-- Toast -->
   <div id="toast" class="hidden fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg">
     Task deleted. <button id="undoBtn" class="text-blue-400 ml-2">Undo</button>
   </div>
 
-  <!-- Add Task Modal -->
-  <div id="addTaskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-    <div class="bg-gray-900 p-6 rounded-lg w-96">
-      <h2 id="modalTitle" class="text-xl font-bold mb-4">Add Task</h2>
-      <form id="taskForm" class="space-y-4">
-        <input type="hidden" id="taskId">
+ <!-- Add Task Modal -->
+<div id="addTaskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-gray-900 p-6 rounded-lg w-96">
+    <h2 id="modalTitle" class="text-xl font-bold mb-4">Add Task</h2>
+    <form id="taskForm" class="space-y-4">
+      <input type="hidden" id="taskId">
 
-        <div>
-          <label class="block text-sm">Task Name</label>
-          <input type="text" id="taskTitle" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2" required>
-        </div>
+      <!-- Task Name -->
+      <div>
+        <label class="block text-sm">Task Name</label>
+        <input type="text" id="taskTitle" 
+          class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2"
+          placeholder="Add task name">
+        <!-- Inline error message -->
+        <p id="taskTitleError" class="text-red-500 text-sm mt-1"></p>
+      </div>
 
-        <div>
-          <label class="block text-sm">Priority</label>
-          <select id="taskPriority" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
-            <option value="high">High</option>
-            <option value="mid">Mid</option>
-            <option value="low">Low</option>
-          </select>
-        </div>
+      <!-- Task Description -->
+      <div>
+        <label class="block text-sm">Description</label>
+        <textarea id="taskDescription" rows="4"
+          class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2 resize-none"
+          placeholder="Enter a short description"></textarea>
+      </div>
 
-        <div>
-          <label class="block text-sm">Due Date</label>
-          <input type="date" id="taskDueDate" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
-        </div>
+      <!-- Priority -->
+      <div>
+        <label class="block text-sm">Priority</label>
+        <select id="taskPriority" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
+          <option value="high">High</option>
+          <option value="mid">Mid</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
 
-        <div>
-          <label class="block text-sm">Due Time</label>
-          <input type="time" id="taskDueTime" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
-        </div>
+      <!-- Due Date -->
+      <div>
+        <label class="block text-sm">Due Date</label>
+        <input type="date" id="taskDueDate" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
+      </div>
 
-        <div class="flex justify-end gap-2">
-          <button type="button" id="cancelBtn" class="bg-gray-600 px-4 py-2 rounded-lg">Cancel</button>
-          <button type="submit" id="submitTaskBtn" class="bg-blue-600 px-4 py-2 rounded-lg">Save Task</button>
-        </div>
-      </form>
-    </div>
+      <!-- Due Time -->
+      <div>
+        <label class="block text-sm">Due Time</label>
+        <input type="time" id="taskDueTime" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end gap-2">
+        <button type="button" id="cancelBtn" class="bg-gray-600 px-4 py-2 rounded-lg">Cancel</button>
+        <button type="submit" id="submitTaskBtn" class="bg-blue-600 px-4 py-2 rounded-lg">Save Task</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <script src="script.js"></script>
+
+  <!-- Load JS in modular form -->
+  <script src="js/storage.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
