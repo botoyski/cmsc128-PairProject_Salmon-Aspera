@@ -11,7 +11,7 @@ function saveTasks() {
 // ---------------------------
 
 // Add Task Function
-function addTask(title, dueDate, dueTime, priority = "low", status = "notStarted") {
+function addTask(title, dueDate, dueTime, priority = "low", status = "notStarted", description = "") {
   const task = {
     id: Date.now(),
     title,
@@ -19,20 +19,22 @@ function addTask(title, dueDate, dueTime, priority = "low", status = "notStarted
     dueTime,
     priority,
     status,
+    description,
     createdAt: new Date().toISOString()
   };
   tasks.push(task);
   saveTasks();
 }
 
-// Edit Task Function (modal version can be added later)
-function editTask(id, newTitle, newDueDate, newDueTime, newPriority) {
+// Edit Task Function
+function editTask(id, newTitle, newDueDate, newDueTime, newPriority, newDescription) {
   const task = tasks.find(t => t.id === id);
   if (task) {
     task.title = newTitle;
     task.dueDate = newDueDate;
     task.dueTime = newDueTime;
     task.priority = newPriority;
+    task.description = newDescription;
     saveTasks();
   }
 }
@@ -53,15 +55,6 @@ function undoDelete() {
     saveTasks();
   }
   hideToast();
-}
-
-// Mark Task as Completed
-function markDone(id) {
-  const task = tasks.find(t => t.id === id);
-  if (task) {
-    task.status = "completed";
-    saveTasks();
-  }
 }
 
 // ---------------------------
@@ -90,47 +83,53 @@ function renderTasks() {
     let container = document.getElementById(containerId);
 
     // Priority styles
-    let priorityColor =
-      task.priority === "high" ? "text-red-400" :
-      task.priority === "mid" ? "text-yellow-300" :
-      "text-green-400"; // low
-
     let priorityBar =
       task.priority === "high" ? "bg-red-500" :
-      task.priority === "mid" ? "bg-yellow-400" :
+      task.priority === "mid" ? "bg-yellow-500" :
       "bg-green-500"; // low
 
+    let priorityBadge =
+      task.priority === "high" ? "bg-red-600 text-white px-2 py-1 rounded-md text-xs font-semibold" :
+      task.priority === "mid" ? "bg-yellow-500 text-white px-2 py-1 rounded-md text-xs font-semibold" :
+      "bg-green-600 text-white px-2 py-1 rounded-md text-xs font-semibold"; // low
+
+    // Fallback if no due date/time
+    let dueText = (task.dueDate || task.dueTime) 
+      ? `Due: ${task.dueDate || ""} ${task.dueTime || ""}` 
+      : "No deadline";
+
     let taskEl = document.createElement("div");
-    taskEl.className = "bg-gray-700 p-4 rounded-lg mb-3 flex flex-col gap-2 shadow-md";
+    taskEl.className = "bg-gray-700 rounded-lg mb-3 flex shadow-md overflow-hidden";
 
     taskEl.innerHTML = `
-      <div class="flex items-start gap-3">
-        <!-- Priority bar -->
-        <span class="w-1.5 rounded-sm ${priorityBar}"></span>
+      <!-- Priority bar full height -->
+      <div class="w-2 ${priorityBar}"></div>
 
-        <!-- Task details -->
-        <div class="flex-1">
-          <p class="font-bold text-lg text-gray-100">${task.title}</p>
-          <p class="text-xs text-gray-400">Date added: ${new Date(task.createdAt).toLocaleString()}</p>
-          <p class="text-sm text-gray-300">${task.description || "No description provided"}</p>
-          <p class="text-sm mt-1">
-            <span class="${priorityColor} font-semibold capitalize">${task.priority}</span> 
-            • Due: ${task.dueDate} ${task.dueTime}
-          </p>
+      <!-- Content -->
+      <div class="flex-1 p-4 flex flex-col gap-2">
+        <!-- Title + Dropdown -->
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="font-bold text-lg text-gray-100">${task.title}</p>
+            <p class="text-xs text-gray-400">Date added: ${new Date(task.createdAt).toLocaleString()}</p>
+            <p class="text-sm text-gray-300">${task.description || "No description provided"}</p>
+            <p class="text-sm mt-1 flex items-center gap-2">
+              <span class="${priorityBadge} capitalize">${task.priority}</span>
+              <span class="text-gray-400">• ${dueText}</span>
+            </p>
+          </div>
+
+          <!-- Dropdown moved here -->
+          <select onchange="updateStatus(${task.id}, this.value)" 
+            class="bg-gray-600 text-gray-200 px-2 py-1 rounded-md text-sm ml-4">
+            <option value="notStarted" ${task.status === "notStarted" ? "selected" : ""}>Not Started</option>
+            <option value="inProgress" ${task.status === "inProgress" ? "selected" : ""}>In Progress</option>
+            <option value="completed" ${task.status === "completed" ? "selected" : ""}>Completed</option>
+          </select>
         </div>
-      </div>
 
-      <!-- Footer actions -->
-      <div class="flex justify-between items-center mt-2">
-        <!-- Status dropdown -->
-        <select onchange="updateStatus(${task.id}, this.value)" class="bg-gray-600 text-gray-200 px-2 py-1 rounded-md text-sm">
-          <option value="notStarted" ${task.status === "notStarted" ? "selected" : ""}>Not Started</option>
-          <option value="inProgress" ${task.status === "inProgress" ? "selected" : ""}>In Progress</option>
-          <option value="completed" ${task.status === "completed" ? "selected" : ""}>Completed</option>
-        </select>
-
-        <!-- Edit + Delete buttons -->
-        <div class="flex gap-3">
+        <!-- Footer actions -->
+        <div class="flex justify-end items-center mt-2 gap-3">
           <button onclick="editTaskPrompt(${task.id})" class="text-yellow-400">✏️</button>
           <button onclick="deleteTask(${task.id})" class="text-red-400">🗑</button>
         </div>
@@ -141,7 +140,8 @@ function renderTasks() {
   });
 }
 
-// Update status when dropdown changes
+
+// Update status
 function updateStatus(id, newStatus) {
   const task = tasks.find(t => t.id === id);
   if (task) {
@@ -149,8 +149,6 @@ function updateStatus(id, newStatus) {
     saveTasks();
   }
 }
-
-
 
 // ---------------------------
 // TOAST
@@ -160,7 +158,6 @@ function showToast() {
   toast.classList.remove("hidden");
   setTimeout(hideToast, 5000);
 }
-
 function hideToast() {
   document.getElementById("toast").classList.add("hidden");
 }
@@ -174,20 +171,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelBtn = document.getElementById("cancelBtn");
   const submitTaskBtn = document.getElementById("submitTaskBtn");
 
-  // Open modal
   addTaskBtn.addEventListener("click", () => {
     addTaskModal.classList.remove("hidden");
   });
-
-  // Close modal
   cancelBtn.addEventListener("click", () => {
     addTaskModal.classList.add("hidden");
   });
 
-  // Save new task
   submitTaskBtn.addEventListener("click", (e) => {
     e.preventDefault();
-
     const title = document.getElementById("taskTitle").value.trim();
     const priority = document.getElementById("taskPriority").value;
     const dueDate = document.getElementById("taskDueDate").value;
@@ -209,9 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addTaskModal.classList.add("hidden");
   });
 
-  // Undo button
   document.getElementById("undoBtn").addEventListener("click", undoDelete);
 
-  // Initial render
   renderTasks();
 });
