@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ---------- ELEMENTS ----------
+  // Cache all relevant DOM elements for modal functionality
   const addTaskBtn = document.getElementById("addTaskBtn");
   const addTaskModal = document.getElementById("addTaskModal");
   const cancelBtn = document.getElementById("cancelBtn");
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const taskTitleError = document.getElementById("taskTitleError");
 
   // ---------- OPEN MODAL FOR ADD ----------
+  // Handles opening the modal in "Add Task" mode
   addTaskBtn.addEventListener("click", () => {
     modalTitle.textContent = "Add Task";
     resetModal();
@@ -22,12 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ---------- CANCEL BUTTON ----------
+  // Handles closing the modal and resetting its contents
   cancelBtn.addEventListener("click", () => {
     addTaskModal.classList.add("hidden");
     resetModal();
   });
 
   // ---------- SUBMIT BUTTON ----------
+  // Handles form submission for adding or editing a task
   submitTaskBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -41,18 +45,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear previous error
     taskTitleError.textContent = "";
 
-    // Validation
+    // ---------- VALIDATION ----------
     if (!title) {
       taskTitleError.textContent = "Please enter a task name.";
       taskTitleInput.focus();
       return;
     }
 
+    // ---------- ADD OR EDIT TASK ----------
     if (id) {
-      // EDIT TASK
+      // Edit existing task
       editTask(Number(id), title, dueDate, dueTime, priority, description);
     } else {
-      // ADD TASK
+      // Add new task
       addTask(title, dueDate, dueTime, priority, "notStarted", description);
     }
 
@@ -61,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ---------- RESET MODAL ----------
+  // Clears all input fields and error messages
   function resetModal() {
     taskIdInput.value = "";
     taskTitleInput.value = "";
@@ -73,6 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ---------- OPEN MODAL FOR EDIT ----------
+/*
+  Populates and opens the modal for editing an existing task.
+  Sets the modal title to "Edit Task" and fills all fields with task data.
+*/
 function editTaskPrompt(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;

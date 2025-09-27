@@ -1,14 +1,13 @@
-// js/search.js
-
+// ---------- SEARCH INPUT ELEMENT ----------
 const searchInput = document.getElementById("searchInput");
 
-// Listen for input changes
+// ---------- LISTEN FOR SEARCH INPUT ----------
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase();
-  renderTasksFiltered(query);
+  renderTasksFiltered(query); // Filter and render tasks based on the query
 });
 
-// Function to render tasks filtered by search query
+// ---------- RENDER TASKS BASED ON SEARCH QUERY ----------
 function renderTasksFiltered(query) {
   // Filter tasks by title or description
   const filteredTasks = tasks.filter(task =>
@@ -16,13 +15,13 @@ function renderTasksFiltered(query) {
     (task.description && task.description.toLowerCase().includes(query))
   );
 
-  // Clear all lists first
+  // ---------- CLEAR EXISTING TASK LISTS ----------
   document.getElementById("notStartedList").innerHTML = "";
   document.getElementById("inProgressList").innerHTML = "";
   document.getElementById("completedList").innerHTML = "";
   document.getElementById("deadlineList").innerHTML = "";
 
-  // Update stats
+  // ---------- UPDATE TASK STATS BASED ON FILTERED RESULTS ----------
   const filteredByCurrent = filteredTasks.filter(task => currentFilter === "all" || task.priority === currentFilter);
 
   document.getElementById("totalTasks").textContent = filteredByCurrent.length;
@@ -30,14 +29,14 @@ function renderTasksFiltered(query) {
   document.getElementById("inProgressTasks").textContent = filteredByCurrent.filter(t => t.status === "inProgress").length;
   document.getElementById("completedTasks").textContent = filteredByCurrent.filter(t => t.status === "completed").length;
 
-  // Render filtered tasks
+  // ---------- RENDER FILTERED TASK ELEMENTS ----------
   filteredByCurrent.forEach(task => {
     let containerId =
       task.status === "notStarted" ? "notStartedList" :
       task.status === "inProgress" ? "inProgressList" : "completedList";
     let container = document.getElementById(containerId);
 
-    // Priority styles
+    // ---------- PRIORITY STYLING ----------
     let priorityBar =
       task.priority === "high" ? "bg-red-500" :
       task.priority === "mid" ? "bg-yellow-500" :
@@ -48,10 +47,12 @@ function renderTasksFiltered(query) {
       task.priority === "mid" ? "bg-yellow-500 text-white px-2 py-1 rounded-md text-xs font-semibold" :
       "bg-green-600 text-white px-2 py-1 rounded-md text-xs font-semibold";
 
+    // Display due date/time or fallback text
     let dueText = (task.dueDate || task.dueTime)
       ? `Due: ${task.dueDate || ""} ${task.dueTime || ""}`
       : "No deadline";
 
+    // ---------- CREATE TASK ELEMENT ----------
     let taskEl = document.createElement("div");
     taskEl.className = "bg-gray-600 text-gray-900 rounded-lg mb-3 flex shadow-md overflow-hidden";
 
@@ -84,6 +85,7 @@ function renderTasksFiltered(query) {
       </div>
     `;
 
+    // Append task to the correct column
     container.appendChild(taskEl);
   });
 }
