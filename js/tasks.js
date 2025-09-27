@@ -1,18 +1,22 @@
+// ---------- ADD TASK ----------
+// Creates a new task object and adds it to the tasks array, then saves to localStorage
 function addTask(title, dueDate, dueTime, priority = "low", status = "notStarted", description = "") {
   const task = {
-    id: Date.now(),
+    id: Date.now(),              // Unique ID based on timestamp
     title,
     dueDate,
     dueTime,
     priority,
     status,
     description,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString() // Track when task was created
   };
   tasks.push(task);
-  saveTasks();
+  saveTasks(); // Persist changes and re-render
 }
 
+// ---------- EDIT TASK ----------
+// Finds a task by ID and updates its properties, then saves
 function editTask(id, newTitle, newDueDate, newDueTime, newPriority, newDescription) {
   const task = tasks.find(t => t.id === id);
   if (task) {
@@ -25,22 +29,28 @@ function editTask(id, newTitle, newDueDate, newDueTime, newPriority, newDescript
   }
 }
 
+// ---------- DELETE TASK ----------
+// Removes a task from the array and stores it temporarily for undo functionality
 function deleteTask(id) {
   deletedTask = tasks.find(t => t.id === id);
   tasks = tasks.filter(t => t.id !== id);
   saveTasks();
-  showToast();
+  showToast(); // Show notification with undo option
 }
 
+// ---------- UNDO DELETE ----------
+// Restores the last deleted task, if available
 function undoDelete() {
   if (deletedTask) {
     tasks.push(deletedTask);
     deletedTask = null;
     saveTasks();
   }
-  hideToast();
+  hideToast(); // Hide the undo notification
 }
 
+// ---------- UPDATE TASK STATUS ----------
+// Changes the status of a task (notStarted, inProgress, completed) and saves
 function updateStatus(id, newStatus) {
   const task = tasks.find(t => t.id === id);
   if (task) {

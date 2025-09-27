@@ -1,9 +1,11 @@
 function renderTasks() {
+  // ---------- CLEAR EXISTING TASK LISTS ----------
   document.getElementById("notStartedList").innerHTML = "";
   document.getElementById("inProgressList").innerHTML = "";
   document.getElementById("completedList").innerHTML = "";
   document.getElementById("deadlineList").innerHTML = "";
 
+  // ---------- CALCULATE TASK STATS ----------
   let total = tasks.length;
   let notStarted = tasks.filter(t => t.status === "notStarted").length;
   let inProgress = tasks.filter(t => t.status === "inProgress").length;
@@ -14,15 +16,17 @@ function renderTasks() {
   document.getElementById("inProgressTasks").textContent = inProgress;
   document.getElementById("completedTasks").textContent = completed;
 
+  // ---------- FILTER AND RENDER TASKS ----------
   tasks
     .filter(task => currentFilter === "all" || task.priority === currentFilter)
     .forEach(task => {
+      // Determine which column the task belongs to
       let containerId =
         task.status === "notStarted" ? "notStartedList" :
         task.status === "inProgress" ? "inProgressList" : "completedList";
       let container = document.getElementById(containerId);
 
-      // Priority styles
+      // Set styles based on task priority
       let priorityBar =
         task.priority === "high" ? "bg-red-500" :
         task.priority === "mid" ? "bg-yellow-500" :
@@ -33,14 +37,16 @@ function renderTasks() {
         task.priority === "mid" ? "bg-yellow-500 text-white px-2 py-1 rounded-md text-xs font-semibold" :
         "bg-green-600 text-white px-2 py-1 rounded-md text-xs font-semibold"; // low
 
+      // Display due date and time or fallback text
       let dueText = (task.dueDate || task.dueTime) 
         ? `Due: ${task.dueDate || ""} ${task.dueTime || ""}` 
         : "No deadline";
 
+      // ---------- CREATE TASK ELEMENT ----------
       let taskEl = document.createElement("div");
       taskEl.className = "bg-gray-600 text-gray-900 rounded-lg mb-3 flex shadow-md overflow-hidden";
 
-    taskEl.innerHTML = `
+      taskEl.innerHTML = `
         <div class="w-2 ${priorityBar}"></div>
         <div class="flex-1 p-4 flex flex-col">
             <div class="flex justify-between items-start">
@@ -74,10 +80,12 @@ function renderTasks() {
             <button onclick="deleteTask(${task.id})" class="text-red-400">🗑</button>
             </div>
         </div>
-    `;
+      `;
 
+      // Append task to the correct column
       container.appendChild(taskEl);
 
+      // ---------- TOGGLE DESCRIPTION BUTTON ----------
       const descEl = document.getElementById(`desc-${task.id}`);
       const toggleBtn = document.getElementById(`toggleBtn-${task.id}`);
       if (descEl.scrollHeight > descEl.clientHeight + 5) {
