@@ -32,11 +32,22 @@ function editTask(id, newTitle, newDueDate, newDueTime, newPriority, newDescript
 // ---------- DELETE TASK ----------
 // Removes a task from the array and stores it temporarily for undo functionality
 function deleteTask(id) {
-  deletedTask = tasks.find(t => t.id === id);
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+
+  // ---------- CONFIRMATION DIALOG ----------
+  const confirmed = confirm(`Are you sure you want to delete "${task.title}"?`);
+  if (!confirmed) return;
+
+  deletedTask = task;
   tasks = tasks.filter(t => t.id !== id);
   saveTasks();
-  showToast(); // Show notification with undo option
+
+  // Show delete toast with undo option
+  showToast("I can't move it, move it anymore!", true);
 }
+
+
 
 // ---------- UNDO DELETE ----------
 // Restores the last deleted task, if available

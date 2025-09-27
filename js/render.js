@@ -76,13 +76,17 @@ function renderTasks() {
             </div>
             <div class="flex justify-end items-center mt-2 gap-3">
             <button onclick="editTaskPrompt(${task.id})" class="text-yellow-400">✏️</button>
-            <button onclick="deleteTask(${task.id})" class="text-red-400">🗑</button>
+            <button class="delete-btn text-red-400" data-id="${task.id}">🗑</button>
             </div>
         </div>
       `;
 
       // Append task to the correct column
       container.appendChild(taskEl);
+      // ---------- ATTACH DELETE EVENT LISTENER ----------
+      taskEl.querySelector(".delete-btn").addEventListener("click", () => {
+      deleteTask(task.id); // confirmation dialog will appear inside deleteTask()
+    });
 
       // ---------- TOGGLE DESCRIPTION BUTTON ----------
       const descEl = document.getElementById(`desc-${task.id}`);
