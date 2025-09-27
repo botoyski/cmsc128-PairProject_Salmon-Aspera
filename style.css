@@ -7,3 +7,7 @@ body {
 button, select, input {
   transition: all 0.2s ease;
 }
+
+/* header {
+  background-color: #0a1433 !important;
+} */
