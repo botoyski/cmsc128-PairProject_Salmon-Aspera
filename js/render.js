@@ -3,7 +3,6 @@ function renderTasks() {
   document.getElementById("notStartedList").innerHTML = "";
   document.getElementById("inProgressList").innerHTML = "";
   document.getElementById("completedList").innerHTML = "";
-  document.getElementById("deadlineList").innerHTML = "";
 
   // ---------- CALCULATE TASK STATS ----------
   let total = tasks.length;
@@ -52,7 +51,7 @@ function renderTasks() {
             <div class="flex justify-between items-start">
             <div>
                 <p class="font-bold text-lg text-gray-100 m-0 leading-none">${task.title}</p>
-                <p class="text-xs text-gray-400 m-0 leading-none">
+                <p class="text-xs text-gray-400 m-1 leading-none">
                 Date added: ${new Date(task.createdAt).toLocaleString()}
                 </p>
                 <p id="desc-${task.id}" 
