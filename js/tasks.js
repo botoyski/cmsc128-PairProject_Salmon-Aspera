@@ -35,16 +35,16 @@ function deleteTask(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;
 
-  // ---------- CONFIRMATION DIALOG ----------
-  const confirmed = confirm(`Are you sure you want to delete "${task.title}"?`);
-  if (!confirmed) return;
+  // ---------- SHOW CUSTOM CONFIRM MODAL ----------
+  showConfirm(`Are you sure you want to delete "${task.title}"?`, () => {
+    // This runs if user clicks Delete
+    deletedTask = task;
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks();
 
-  deletedTask = task;
-  tasks = tasks.filter(t => t.id !== id);
-  saveTasks();
-
-  // Show delete toast with undo option
-  showToast("I can't move it, move it anymore!", true);
+    // Show undo toast
+    showToast("I can't move it, move it anymore!", true);
+  });
 }
 
 

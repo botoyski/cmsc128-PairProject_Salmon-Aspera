@@ -109,3 +109,31 @@ function editTaskPrompt(id) {
 
   addTaskModal.classList.remove("hidden");
 }
+
+let confirmCallback = null;
+
+function showConfirm(message, onConfirm) {
+  const modal = document.getElementById("confirmModal");
+  const msgEl = document.getElementById("confirmMessage");
+
+  msgEl.textContent = message;
+  confirmCallback = onConfirm;
+
+  modal.classList.remove("hidden");
+}
+
+function hideConfirm() {
+  document.getElementById("confirmModal").classList.add("hidden");
+  confirmCallback = null;
+}
+
+// Cancel button
+document.getElementById("confirmCancelBtn").addEventListener("click", () => {
+  hideConfirm();
+});
+
+// Confirm (OK) button
+document.getElementById("confirmOkBtn").addEventListener("click", () => {
+  if (confirmCallback) confirmCallback(); // call the delete function
+  hideConfirm();
+});
