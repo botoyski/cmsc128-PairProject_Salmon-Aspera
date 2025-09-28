@@ -8,8 +8,6 @@
   <!-- Tailwind CSS CDN for utility-first styling -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   
-  <!-- Custom stylesheet for additional styles -->
-  <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
 
@@ -22,7 +20,7 @@
     <!-- Logo and App Title -->
     <div class="flex items-center gap-3">
       <div class="h-10 w-10">
-        <img src="images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
+        <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
       </div>
       <div>
         <h1 class="font-bold text-lg">Move It!</h1>
@@ -57,7 +55,7 @@
         <p id="totalTasks" class="text-2xl font-bold text-white">0</p>
       </div>
       <div class="bg-blue-600 w-12 h-12 rounded-lg flex items-center justify-center">
-        <img src="images/totaltask.png" alt="Total Tasks" class="h-10 w-10 object-contain">
+        <img src="static/images/totaltask.png" alt="Total Tasks" class="h-10 w-10 object-contain">
       </div>
     </div>
 
@@ -68,7 +66,7 @@
         <p id="notStartedTasks" class="text-2xl font-bold text-red-500">0</p>
       </div>
       <div class="bg-red-600 w-12 h-12 rounded-lg flex items-center justify-center">
-        <img src="images/notstarted.png" alt="Not Started" class="h-10 w-10 object-contain">
+        <img src="static/images/notstarted.png" alt="Not Started" class="h-10 w-10 object-contain">
       </div>
     </div>
 
@@ -79,7 +77,7 @@
         <p id="inProgressTasks" class="text-2xl font-bold text-yellow-500">0</p>
       </div>
       <div class="bg-yellow-500 w-12 h-12 rounded-lg flex items-center justify-center">
-        <img src="images/loading.png" alt="In Progress" class="h-14 w-14 object-contain">
+        <img src="static/images/loading.png" alt="In Progress" class="h-14 w-14 object-contain">
       </div>
     </div>
 
@@ -152,7 +150,7 @@
   <footer class="bg-blue-900 border-t border-gray-800 p-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="h-10 w-10">
-        <img src="images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
+        <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
       </div>
       <div>
         <p class="text-gray-200 text-sm">@2025 Move It! All rights reserved.</p>
@@ -244,14 +242,14 @@
        LOAD JS FILES IN MODULAR FORM
        storage.js -> tasks.js -> render.js -> filters.js -> search.js -> toast.js -> modal.js -> main.js
        ========================== -->
-  <script src="js/storage.js"></script>
-  <script src="js/tasks.js"></script>
-  <script src="js/render.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/toast.js"></script>
-  <script src="js/modal.js"></script>
-  <script src="js/main.js"></script>
+  <script src="static/js/storage.js"></script>
+  <script src="static/js/tasks.js"></script>
+  <script src="static/js/render.js"></script>
+  <script src="static/js/filters.js"></script>
+  <script src="static/js/search.js"></script>
+  <script src="static/js/toast.js"></script>
+  <script src="static/js/modal.js"></script>
+  <script src="static/js/main.js"></script>
 
 </body>
 </html>
