@@ -55,8 +55,8 @@ function renderTasks() {
         <div class="flex justify-between items-start">
           <div>
             <p class="font-bold text-lg text-gray-100 m-0 leading-none">${task.title}</p>
-            <p class="text-xs text-gray-400 m-0 leading-none">Date added: ${new Date(task.createdAt).toLocaleString()}</p>
-            <p id="desc-${task.id}" class="text-sm text-gray-300 whitespace-pre-line break-words leading-snug max-h-16 overflow-hidden transition-all duration-300 ease-in-out m-0">
+            <p class="text-xs text-gray-400 m-1 leading-none">Date added: ${new Date(task.createdAt).toLocaleString()}</p>
+            <p id="desc-${task.id}" class="text-sm text-gray-300 whitespace-pre-line break-words leading-none max-h-16 overflow-hidden transition-all duration-300 ease-in-out m-0">
               ${task.description || "No description provided"}
             </p>
             <button id="toggleBtn-${task.id}" onclick="toggleDescription(${task.id})" class="hidden text-blue-400 text-xs mt-1">Read more</button>
