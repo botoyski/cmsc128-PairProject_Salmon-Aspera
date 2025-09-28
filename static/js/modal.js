@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---------- VALIDATION ----------
     if (!title) {
-      taskTitleError.textContent = "Please enter a task name.";
+      taskTitleError.textContent = "Please enter a task name.";//validation error message
       taskTitleInput.focus();
       return;
     }
