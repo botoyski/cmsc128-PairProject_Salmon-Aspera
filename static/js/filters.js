@@ -11,7 +11,7 @@ document.querySelectorAll(".priority-btn").forEach(btn => {
         "active",        // Custom class indicating active filter
         "ring-2",        // Tailwind class for 2px ring around button
         "ring-offset-2", // Tailwind class for ring offset
-        "ring-white"     // Tailwind class to set ring color
+        "ring-white"     // Tailwind class to set ring color  
       )
     );
 
