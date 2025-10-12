@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- =========================
+       META & TITLE SECTION
+       Defines page structure, viewport scaling, and imports TailwindCSS for styling.
+  ========================== -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Move It! | Profile Settings</title>
+
+  <!-- TailwindCSS Framework -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
 
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER SECTION
+       Includes site branding, navigation links, and logout button.
+  ========================== -->
   <header class="flex items-center justify-between px-8 py-4 bg-blue-900 shadow-md">
+    <!-- Logo and Title -->
     <div class="flex items-center space-x-2">
       <img src="../static/images/logo.png" alt="Move It Logo" class="h-8 w-8">
       <h1 class="text-xl font-semibold text-white">Move It!</h1>
     </div>
+
+    <!-- Navigation Links -->
     <nav class="space-x-6 text-gray-300 flex items-center">
       <a href="index.html" class="hover:text-white">Dashboard</a>
       <a href="profile.html" class="hover:text-white font-semibold text-white">Profile</a>
-      <!-- ✅ Replaced static logout link with button -->
+
+      <!-- ✅ Replaced static logout link with interactive button -->
       <button id="logoutBtn" 
               class="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-lg font-medium transition duration-300">
         Logout
@@ -25,18 +39,24 @@
     </nav>
   </header>
 
-  <!-- MAIN CONTENT -->
+  <!-- =========================
+       MAIN PROFILE CONTENT
+       Displays the user's account information and allows them to update their details.
+  ========================== -->
   <main class="flex-grow flex items-center justify-center p-6">
     <div class="bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg p-8">
+      
+      <!-- Header Section for Profile Info -->
       <div class="flex flex-col items-center mb-6">
         <img src="../static/images/logo.png" alt="Move It Logo" class="h-12 mb-3">
         <h2 class="text-2xl font-bold text-white">Profile Settings</h2>
         <p class="text-gray-400 text-sm mt-1">Manage your account details securely</p>
       </div>
 
-      <!-- ✅ Added form ID and input IDs -->
+      <!-- ✅ User Profile Form -->
       <form id="profileForm" class="space-y-5">
-        <!-- Name -->
+
+        <!-- Full Name Field -->
         <div>
           <label for="profileName" class="block text-sm font-medium mb-1 text-gray-300">Full Name</label>
           <input id="profileName" type="text" 
@@ -44,7 +64,7 @@
                         focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
 
-        <!-- Username -->
+        <!-- Username / Email Field -->
         <div>
           <label for="profileUsername" class="block text-sm font-medium mb-1 text-gray-300">Username or Email</label>
           <input id="profileUsername" type="text"
@@ -52,7 +72,7 @@
                         focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
 
-        <!-- Password -->
+        <!-- Password Field -->
         <div>
           <label for="profilePassword" class="block text-sm font-medium mb-1 text-gray-300">Password</label>
           <input id="profilePassword" type="password" placeholder="Enter new password"
@@ -61,7 +81,7 @@
           <p class="text-gray-400 text-xs mt-1">Leave blank to keep your current password.</p>
         </div>
 
-        <!-- ACTION BUTTONS -->
+        <!-- Form Buttons -->
         <div class="flex justify-between items-center mt-6">
           <a href="index.html" class="text-gray-400 hover:text-gray-200 text-sm">← Back to Dashboard</a>
           <button type="submit"
@@ -74,12 +94,19 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER SECTION
+       Displays site information and branding.
+  ========================== -->
   <footer class="text-center text-gray-500 text-sm py-4 border-t border-gray-800">
     © 2025 Move It! — Let’s Move It, Move It!
   </footer>
 
-  <!-- ✅ JS Links -->
+  <!-- =========================
+       JAVASCRIPT LINKS
+       profile.js → Handles profile logic (load/save username)
+       logout.js  → Handles logout logic (clear localStorage, redirect)
+  ========================== -->
   <script src="../static/js/profile.js"></script>
   <script src="../static/js/logout.js"></script>
 </body>
