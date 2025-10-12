@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Move It! - Login</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script defer src="../static/js/login.js"></script>
+  <script src="../static/js/togglePassword.js"></script>
+
+
 </head>
 
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
 
   <!-- HEADER -->
   <header class="bg-blue-900 border-b border-gray-800 p-4 flex items-center justify-between">
-    <!-- Logo and Title -->
     <div class="flex items-center gap-3">
       <div class="h-10 w-10">
         <img src="../static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
@@ -22,7 +25,6 @@
       </div>
     </div>
 
-    <!-- Navbar Links -->
     <nav class="flex gap-6 text-sm text-gray-300">
       <a href="#" class="hover:text-white">About</a>
       <a href="#" class="hover:text-white">Features</a>
@@ -44,38 +46,45 @@
       </div>
 
       <!-- Sign In Form -->
-      <form class="space-y-5 text-left">
+      <form id="loginForm" class="space-y-5 text-left">
         <h3 class="text-center text-xl font-semibold mb-4">Sign In</h3>
 
         <div>
           <label class="block text-sm mb-1 text-gray-300">Username or Email</label>
-          <input type="text" placeholder="Enter your username or email" required
+          <input id="username" type="text" placeholder="Enter your username or email" required
             class="w-full bg-gray-700 text-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
         <div>
           <label class="block text-sm mb-1 text-gray-300">Password</label>
           <div class="relative">
-            <input type="password" placeholder="Enter your password" required
-              class="w-full bg-gray-700 text-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-3 top-2.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-          </div>
+                <input id="password" type="password" placeholder="Enter your password" required
+                    class="w-full bg-gray-700 text-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    class="h-5 w-5 absolute right-3 top-2.5 text-gray-400 cursor-pointer" 
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    id="togglePassword">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5
+                        c4.478 0 8.268 2.943 9.542 7
+                        -1.274 4.057-5.064 7-9.542 7
+                        -4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+            </div>
+
         </div>
 
         <div class="flex justify-between items-center text-sm text-gray-400">
           <label class="flex items-center gap-2">
             <input type="checkbox" class="form-checkbox text-blue-600"> Remember me
           </label>
-          <a href="#" class="text-blue-400 hover:underline">Forgot Password?</a>
+          <a href="recover.html" class="text-blue-400 hover:underline">Forgot Password?</a>
         </div>
 
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold">
-           Sign In
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">
+          Sign In
         </button>
 
         <div class="flex items-center justify-center my-3">
@@ -84,14 +93,26 @@
           <span class="h-px w-20 bg-gray-600"></span>
         </div>
 
+        <!-- OAuth Buttons -->
         <div class="flex gap-3">
-          <button type="button" class="flex-1 bg-red-600 hover:bg-red-700 py-2 rounded-lg font-medium">Google</button>
-          <button type="button" class="flex-1 bg-blue-700 hover:bg-blue-800 py-2 rounded-lg font-medium">Microsoft</button>
+          <!-- Google -->
+          <button type="button"
+            class="flex-1 flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-100 py-2 rounded-lg font-medium transition">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="h-5 w-5">
+            <span>Google</span>
+          </button>
+
+          <!-- Facebook -->
+          <button type="button"
+            class="flex-1 flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-100 py-2 rounded-lg font-medium transition">
+            <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" class="h-5 w-5">
+            <span>Facebook</span>
+          </button>
         </div>
 
         <p class="text-center text-sm text-gray-400 mt-5">
           Don’t have an account? 
-          <a href="#" class="text-green-400 hover:underline font-medium">Create Account</a>
+          <a href="signup.html" class="text-green-400 hover:underline font-medium">Create Account</a>
         </p>
       </form>
     </div>
