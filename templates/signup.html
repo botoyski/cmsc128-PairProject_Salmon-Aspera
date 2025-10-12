@@ -1,0 +1,141 @@
+<!--
+==========================================================
+  Move It! — Create Account Page (create_account.html)
+  ------------------------------------------------------
+  Description:
+  This page allows users to create an account for the Move It! productivity app.
+  It features a responsive design built with Tailwind CSS, including:
+    • Header with navigation
+    • Sign-up form for name, username/email, and password
+    • Connection to auth.js for account creation logic
+    • Footer branding
+
+  The form’s behavior (validation, saving user info to localStorage, etc.)
+  is handled by the external JS file: ../static/js/auth.js
+
+  Author: [Your Name]
+  Last Updated: October 2025
+==========================================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- META DATA AND TITLE -->
+  <!-- Sets character encoding, viewport responsiveness, and includes Tailwind CSS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move It! | Create Account</title>
+
+  <!-- Tailwind CSS for styling -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+
+  <!-- ==========================================================
+       HEADER SECTION
+       ----------------------------------------------------------
+       Contains the app logo, title, and navigation links.
+       The nav links are placeholders for future expansion
+       (e.g., About, Features, Pricing, Support).
+  ========================================================== -->
+  <header class="flex items-center justify-between px-8 py-4 bg-blue-900 shadow-md">
+    <div class="flex items-center space-x-2">
+      <img src="../static/images/logo.png" alt="Move It Logo" class="h-8 w-8">
+      <h1 class="text-xl font-semibold text-white">Move It!</h1>
+    </div>
+
+    <nav class="space-x-6 text-gray-300">
+      <a href="#" class="hover:text-white">About</a>
+      <a href="#" class="hover:text-white">Features</a>
+      <a href="#" class="hover:text-white">Pricing</a>
+      <a href="#" class="hover:text-white">Support</a>
+    </nav>
+  </header>
+
+  <!-- ==========================================================
+       MAIN SECTION — SIGN UP FORM
+       ----------------------------------------------------------
+       Centered form card where users enter their name, username/email,
+       and password to create an account. The form sends data
+       to auth.js for processing.
+  ========================================================== -->
+  <main class="flex-grow flex items-center justify-center p-6">
+    <div class="bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-8">
+
+      <!-- FORM HEADER / LOGO -->
+      <div class="flex flex-col items-center mb-6">
+        <img src="../static/images/logo.png" alt="Move It Logo" class="h-12 mb-2">
+        <h2 class="text-2xl font-bold text-white">Create Account</h2>
+        <p class="text-gray-400 text-sm mt-1">Start organizing your productivity journey</p>
+      </div>
+
+      <!-- SIGN UP FORM -->
+      <!-- Each input field is required and styled using Tailwind -->
+      <form id="signupForm" class="space-y-5">
+
+        <!-- USER'S FULL NAME -->
+        <div>
+          <label for="name" class="block text-sm font-medium mb-1 text-gray-300">Full Name</label>
+          <input id="name" type="text" placeholder="Enter your full name" required
+                 class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- USERNAME / EMAIL -->
+        <div>
+          <label for="username" class="block text-sm font-medium mb-1 text-gray-300">Username or Email</label>
+          <input id="username" type="text" placeholder="Enter your username or email" required
+                 class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- PASSWORD FIELD -->
+        <div>
+          <label for="password" class="block text-sm font-medium mb-1 text-gray-300">Password</label>
+          <input id="password" type="password" placeholder="Create your password" required
+                 class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <!-- Clicking this will trigger auth.js to save user credentials -->
+        <button type="submit"
+                class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold 
+                       transition-all duration-300">
+          Create Account
+        </button>
+      </form>
+
+      <!-- FEEDBACK MESSAGE (Success or Error) -->
+      <p id="message" class="text-center text-sm mt-4"></p>
+
+      <!-- REDIRECT TO LOGIN -->
+      <p class="text-center text-sm text-gray-400 mt-6">
+        Already have an account?
+        <a href="login.html" class="text-blue-400 hover:underline">Sign In</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- ==========================================================
+       FOOTER SECTION
+       ----------------------------------------------------------
+       Displays branding and copyright.
+  ========================================================== -->
+  <footer class="text-center text-gray-500 text-sm py-4 border-t border-gray-800">
+    © 2025 Move It! — Let’s Move It, Move It!
+  </footer>
+
+  <!-- ==========================================================
+       EXTERNAL SCRIPT
+       ----------------------------------------------------------
+       Connects this HTML page to auth.js, which handles:
+         - User registration logic
+         - Local storage management
+         - Validation and redirection
+  ========================================================== -->
+  <script src="../static/js/auth.js"></script>
+</body>
+</html>

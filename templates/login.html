@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+    ==============================
+           MOVE IT! LOGIN PAGE
+    ==============================
+    Author: Salmon-Aspera Team
+    Course: CMSC 128 - Web Programming
+    File: login.html
+    Description:
+      This page serves as the login interface for the Move It! web app.
+      It allows users to log in with a username and password.
+      Includes features:
+        • "Remember me" option for remembering the username
+        • Show/Hide password functionality
+        • Links to password recovery and sign-up
+        • OAuth (Google, Facebook) buttons for potential external login
+  -->
+
+  <!-- Metadata and Title -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move It! - Login</title>
+
+  <!-- Tailwind CSS for styling -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- JavaScript Files -->
+  <!-- login.js handles user authentication logic -->
+  <script defer src="../static/js/login.js"></script>
+  <!-- togglePassword.js toggles visibility of the password input -->
+  <script src="../static/js/togglePassword.js"></script>
+</head>
+
+<body class="bg-gray-900 text-white flex flex-col min-h-screen">
+
+  <!-- ==============================
+              HEADER SECTION
+       ==============================
+       Contains the logo, app name, and navigation links.
+  -->
+  <header class="bg-blue-900 border-b border-gray-800 p-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <!-- App Logo -->
+      <div class="h-10 w-10">
+        <img src="../static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
+      </div>
+
+      <!-- App Title -->
+      <div>
+        <h1 class="font-bold text-lg">Move It!</h1>
+        <p class="text-gray-200 text-sm">Let's Move it, Move it!</p>
+      </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="flex gap-6 text-sm text-gray-300">
+      <a href="#" class="hover:text-white">About</a>
+      <a href="#" class="hover:text-white">Features</a>
+      <a href="#" class="hover:text-white">Pricing</a>
+      <a href="#" class="hover:text-white">Support</a>
+    </nav>
+  </header>
+
+  <!-- ==============================
+              MAIN LOGIN FORM
+       ==============================
+       Central container with login inputs, buttons, and options.
+  -->
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md bg-gray-800 p-8 rounded-2xl shadow-lg text-center">
+
+      <!-- Logo and Welcome Message -->
+      <div class="flex flex-col items-center mb-6">
+        <img src="../static/images/logo.png" alt="Move It Logo" class="h-16 w-16 rounded-lg mb-3">
+        <h2 class="text-2xl font-bold text-white-400">Move It!</h2>
+        <p class="text-gray-400 text-sm mt-1">Welcome back to your productivity hub</p>
+        <p class="text-green-500 text-xs mt-1">• Secure Login Portal •</p>
+      </div>
+
+      <!-- ==============================
+                LOGIN FORM AREA
+           ==============================
+           Includes:
+            • Username/email input
+            • Password input with show/hide icon
+            • Remember me checkbox
+            • Sign In button
+      -->
+      <form id="loginForm" class="space-y-5 text-left">
+        <h3 class="text-center text-xl font-semibold mb-4">Sign In</h3>
+
+        <!-- Username Input -->
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Username or Email</label>
+          <input id="username" type="text" placeholder="Enter your username or email" required
+            class="w-full bg-gray-700 text-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <!-- Password Input with Toggle Icon -->
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Password</label>
+          <div class="relative">
+            <!-- Password field -->
+            <input id="password" type="password" placeholder="Enter your password" required
+              class="w-full bg-gray-700 text-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            
+            <!-- Eye icon to toggle password visibility -->
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              class="h-5 w-5 absolute right-3 top-2.5 text-gray-400 cursor-pointer" 
+              fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              id="togglePassword">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5
+                  c4.478 0 8.268 2.943 9.542 7
+                  -1.274 4.057-5.064 7-9.542 7
+                  -4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Remember Me + Forgot Password -->
+        <div class="flex justify-between items-center text-sm text-gray-400">
+          <label class="flex items-center gap-2">
+            <!-- This checkbox allows saving username locally if checked -->
+            <input type="checkbox" class="form-checkbox text-blue-600" id="rememberMe"> Remember me
+          </label>
+          <a href="recover.html" class="text-blue-400 hover:underline">Forgot Password?</a>
+        </div>
+
+        <!-- Sign In Button -->
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold transition">
+          Sign In
+        </button>
+
+        <!-- Divider (or continue with ...) -->
+        <div class="flex items-center justify-center my-3">
+          <span class="h-px w-20 bg-gray-600"></span>
+          <span class="text-gray-400 text-sm mx-2">or continue with</span>
+          <span class="h-px w-20 bg-gray-600"></span>
+        </div>
+
+        <!-- OAuth Buttons (Google and Facebook) -->
+        <div class="flex gap-3">
+          <!-- Google Login Button -->
+          <button type="button"
+            class="flex-1 flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-100 py-2 rounded-lg font-medium transition">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="h-5 w-5">
+            <span>Google</span>
+          </button>
+
+          <!-- Facebook Login Button -->
+          <button type="button"
+            class="flex-1 flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-100 py-2 rounded-lg font-medium transition">
+            <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" class="h-5 w-5">
+            <span>Facebook</span>
+          </button>
+        </div>
+
+        <!-- Sign Up Link -->
+        <p class="text-center text-sm text-gray-400 mt-5">
+          Don’t have an account? 
+          <a href="signup.html" class="text-green-400 hover:underline font-medium">Create Account</a>
+        </p>
+      </form>
+    </div>
+  </main>
+
+  <!-- ==============================
+                FOOTER
+       ==============================
+       Contains branding and copyright.
+  -->
+  <footer class="bg-blue-900 border-t border-gray-800 p-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10">
+        <img src="../static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
+      </div>
+      <p class="text-gray-200 text-sm">@2025 Move It! All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
