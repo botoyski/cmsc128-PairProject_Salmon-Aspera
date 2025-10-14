@@ -22,7 +22,7 @@
   <header class="flex items-center justify-between px-8 py-4 bg-blue-900 shadow-md">
     <!-- Logo and Title -->
     <div class="flex items-center space-x-2">
-      <img src="../static/images/logo.png" alt="Move It Logo" class="h-8 w-8">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Move It Logo" class="h-8 w-8">
       <h1 class="text-xl font-semibold text-white">Move It!</h1>
     </div>
 
@@ -48,7 +48,7 @@
       
       <!-- Header Section for Profile Info -->
       <div class="flex flex-col items-center mb-6">
-        <img src="../static/images/logo.png" alt="Move It Logo" class="h-12 mb-3">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Move It Logo" class="h-12 mb-3">
         <h2 class="text-2xl font-bold text-white">Profile Settings</h2>
         <p class="text-gray-400 text-sm mt-1">Manage your account details securely</p>
       </div>
@@ -59,7 +59,7 @@
         <!-- Full Name Field -->
         <div>
           <label for="profileName" class="block text-sm font-medium mb-1 text-gray-300">Full Name</label>
-          <input id="profileName" type="text" 
+          <input id="profileName" name="profileName" type="text" 
                  class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
                         focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
@@ -67,7 +67,7 @@
         <!-- Username / Email Field -->
         <div>
           <label for="profileUsername" class="block text-sm font-medium mb-1 text-gray-300">Username or Email</label>
-          <input id="profileUsername" type="text"
+          <input id="profileUsername" name="profileUsername" type="text"
                  class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
                         focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
@@ -75,7 +75,7 @@
         <!-- Password Field -->
         <div>
           <label for="profilePassword" class="block text-sm font-medium mb-1 text-gray-300">Password</label>
-          <input id="profilePassword" type="password" placeholder="Enter new password"
+          <input id="profilePassword" name="profilePassword" type="password" placeholder="Enter new password"
                  class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
                         focus:ring-2 focus:ring-blue-500 outline-none">
           <p class="text-gray-400 text-xs mt-1">Leave blank to keep your current password.</p>
@@ -107,7 +107,7 @@
        profile.js → Handles profile logic (load/save username)
        logout.js  → Handles logout logic (clear localStorage, redirect)
   ========================== -->
-  <script src="../static/js/profile.js"></script>
-  <script src="../static/js/logout.js"></script>
+  <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
 </body>
 </html>
