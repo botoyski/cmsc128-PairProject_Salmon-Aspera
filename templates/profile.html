@@ -28,8 +28,8 @@
 
     <!-- Navigation Links -->
     <nav class="space-x-6 text-gray-300 flex items-center">
-      <a href="index.html" class="hover:text-white">Dashboard</a>
-      <a href="profile.html" class="hover:text-white font-semibold text-white">Profile</a>
+      <a href="{{ url_for('index_page') }}" class="hover:text-white">Dashboard</a>
+      <a href="{{ url_for('profile_page') }}" class="hover:text-white font-semibold text-white">Profile</a>
 
       <!-- ✅ Replaced static logout link with interactive button -->
       <button id="logoutBtn" 
