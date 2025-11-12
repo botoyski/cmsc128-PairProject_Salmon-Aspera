@@ -1,232 +1,236 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Move It! - To Do List</title>
-    
-    <!-- Tailwind CSS CDN for utility-first styling -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-  </head>
-  <body class="bg-gray-900 text-white flex flex-col min-h-screen">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Move It! - To Do List</title>
+  
+  <!-- Tailwind CSS CDN for utility-first styling -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  
+</head>
+<body class="bg-gray-900 text-white flex flex-col min-h-screen">
 
-    <!-- ==========================
-        HEADER SECTION
-        Contains logo, title, search bar, and add task button
-        ========================== -->
-    <header class="bg-blue-900 border-b border-gray-800 p-4 flex items-center justify-between">
-      
-      <!-- Logo and App Title -->
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10">
-          <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
-        </div>
-        <div>
-          <h1 class="font-bold text-lg">Move It!</h1>
-          <p class="text-gray-200 text-sm">Let's Move it, Move it!</p>
-        </div>
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-800 border-b border-gray-800 p-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="h-8 w-8">
+        <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
       </div>
-
-      <!-- Search Input -->
-      <div class="flex-1 max-w-lg mx-6">
-        <input id="searchInput" type="text" placeholder="Search tasks..."
-          class="w-full bg-gray-800 text-gray-200 rounded-lg px-4 py-2 focus:outline-none">
-      </div>
-
-      <!-- Add Task Button -->
-      <div class="flex items-center gap-3">
-        <button id="addTaskBtn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg">
-          + Add New Task
-        </button>
-      </div>
-    </header>
-
-    <!-- ==========================
-        STATS SECTION
-        Displays total, not started, in progress, and completed tasks
-        ========================== -->
-    <section class="p-6 grid grid-cols-4 gap-6">
-      
-      <!-- Total Tasks Card -->
-      <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
-        <div>
-          <p class="text-gray-400 text-sm">Total Tasks</p>
-          <p id="totalTasks" class="text-2xl font-bold text-white">0</p>
-        </div>
-        <div class="bg-blue-600 w-12 h-12 rounded-lg flex items-center justify-center">
-          <img src="static/images/totaltask.png" alt="Total Tasks" class="h-10 w-10 object-contain">
-        </div>
-      </div>
-
-      <!-- Not Started Tasks Card -->
-      <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
-        <div>
-          <p class="text-gray-400 text-sm">Not Started</p>
-          <p id="notStartedTasks" class="text-2xl font-bold text-red-500">0</p>
-        </div>
-        <div class="bg-red-600 w-12 h-12 rounded-lg flex items-center justify-center">
-          <img src="static/images/notstarted.png" alt="Not Started" class="h-10 w-10 object-contain">
-        </div>
-      </div>
-
-      <!-- In Progress Tasks Card -->
-      <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
-        <div>
-          <p class="text-gray-400 text-sm">In Progress</p>
-          <p id="inProgressTasks" class="text-2xl font-bold text-yellow-500">0</p>
-        </div>
-        <div class="bg-yellow-500 w-12 h-12 rounded-lg flex items-center justify-center">
-          <img src="static/images/loading.png" alt="In Progress" class="h-14 w-14 object-contain">
-        </div>
-      </div>
-
-      <!-- Completed Tasks Card -->
-      <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
-        <div>
-          <p class="text-gray-400 text-sm">Completed</p>
-          <p id="completedTasks" class="text-2xl font-bold text-green-500">0</p>
-        </div>
-        <div class="bg-green-600 w-12 h-12 rounded-lg flex items-center justify-center">
-          <!-- Checkmark icon for completed tasks -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================
-        PRIORITY FILTER BUTTONS
-        Allows user to filter tasks based on priority
-        ========================== -->
-    <section class="px-6 mb-4 flex items-center gap-4">
-      <div class="flex flex-1 gap-4">
-        <button data-priority="all" class="priority-btn flex-1 bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-lg font-medium">
-          All
-        </button>
-        <button data-priority="high" class="priority-btn flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium">
-          High
-        </button>
-        <button data-priority="mid" class="priority-btn flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg font-medium">
-          Mid
-        </button>
-        <button data-priority="low" class="priority-btn flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium">
-          Low
-        </button>
-      </div>
-    </section>
-
-    <!-- ==========================
-        TASK COLUMNS
-        Displays tasks in Not Started, In Progress, and Completed columns
-        ========================== -->
-    <section class="p-4 grid grid-cols-3 gap-4 flex-1">
-      
-      <!-- Not Started Column -->
-      <div>
-        <h2 class="font-bold text-gray-200 mb-2 ml-2">Not Started</h2>
-        <div id="notStartedList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
-      </div>
-
-      <!-- In Progress Column -->
-      <div>
-        <h2 class="font-bold text-gray-200 mb-2 ml-2">In Progress</h2>
-        <div id="inProgressList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
-      </div>
-
-      <!-- Completed Column -->
-      <div>
-        <h2 class="font-bold text-gray-200 mb-2 ml-2">Completed</h2>
-        <div id="completedList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
-      </div>
-    </section>
-
-
-    <!-- ==========================
-        FOOTER SECTION
-        Mirrors header style with logo and copyright
-        ========================== -->
-    <footer class="bg-blue-900 border-t border-gray-800 p-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10">
-          <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
-        </div>
-        <div>
-          <p class="text-gray-200 text-sm">@2025 Move It! All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- ==========================
-        TOAST NOTIFICATION
-        Shows temporary messages like 'Task deleted'
-        ========================== -->
-    <div id="toast" class="hidden fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg">
-      Task deleted. <button id="undoBtn" class="text-blue-400 ml-2">Undo</button>
+      <h1 class="font-bold text-lg">Move It!</h1>
     </div>
+    <div class="flex gap-6">
+      <a href="{{ url_for('index_page') }}" class="text-white hover:text-blue-300">Dashboard</a>
+      <a href="{{ url_for('profile_page') }}" class="text-white hover:text-blue-300">Profile</a>
+      <button id="logoutBtn" 
+              class="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-lg font-medium transition duration-300">
+        Logout
+      </button>
+    </div>
+  </nav>
 
-    <!-- ==========================
-        ADD TASK MODAL
-        Modal window for creating or editing tasks
-        ========================== -->
-    <div id="addTaskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div class="bg-gray-900 p-6 rounded-lg w-96">
-        <h2 id="modalTitle" class="text-xl font-bold mb-4">Add Task</h2>
-        <form id="taskForm" class="space-y-4">
-          <!-- Hidden input to store task ID during edit -->
-          <input type="hidden" id="taskId">
+  <!-- ==========================
+    HEADER SECTION
+    Contains search bar, and add task button
+    ========================== -->
+  <!-- Header Section -->
+  <header class="bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between gap-4">
+    <div class="flex-1 max-w-lg mx-auto">
+      <input id="searchInput" type="text" placeholder="Search tasks..."
+             class="w-full bg-white-800 text-black rounded-lg px-4 py-2 focus:outline-none">
+    </div>
+    <div class="flex items-center mr-4">
+      <button id="addTaskBtn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg">
+        + Add New Task
+      </button>
+    </div>
+  </header>
 
-          <!-- Task Name Input -->
-          <div>
-            <label class="block text-sm">Task Name</label>
-            <input type="text" id="taskTitle" 
-              class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2"
-              placeholder="Add task name">
-            <!-- Inline error message for validation -->
-            <p id="taskTitleError" class="text-red-500 text-sm mt-1"></p>
-          </div>
+  <!-- ==========================
+    STATS SECTION
+    Displays total, not started, in progress, and completed tasks
+    ========================== -->
+  <section class="p-6 grid grid-cols-4 gap-6">
 
-          <!-- Task Description Input -->
-          <div>
-            <label class="block text-sm">Description</label>
-            <textarea id="taskDescription" rows="4"
-              class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2 resize-none"
-              placeholder="Enter a short description"></textarea>
-          </div>
-
-          <!-- Task Priority Selector -->
-          <div>
-            <label class="block text-sm">Priority</label>
-            <select id="taskPriority" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
-              <option value="high">High</option>
-              <option value="mid">Mid</option>
-              <option value="low">Low</option>
-            </select>
-          </div>
-
-          <!-- Task Due Date Input -->
-          <div>
-            <label class="block text-sm">Due Date</label>
-            <input type="date" id="taskDueDate" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
-          </div>
-
-          <!-- Task Due Time Input -->
-          <div>
-            <label class="block text-sm">Due Time</label>
-            <input type="time" id="taskDueTime" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
-          </div>
-
-          <!-- Modal Buttons -->
-          <div class="flex justify-end gap-2">
-            <button type="button" id="cancelBtn" class="bg-gray-600 px-4 py-2 rounded-lg">Cancel</button>
-            <button type="submit" id="submitTaskBtn" class="bg-blue-600 px-4 py-2 rounded-lg">Save Task</button>
-          </div>
-        </form>
+    <!-- Total Tasks Card -->
+    <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
+      <div>
+        <p class="text-gray-400 text-sm">Total Tasks</p>
+        <p id="totalTasks" class="text-2xl font-bold text-white">0</p>
+      </div>
+      <div class="bg-blue-600 w-12 h-12 rounded-lg flex items-center justify-center">
+        <img src="static/images/totaltask.png" alt="Total Tasks" class="h-10 w-10 object-contain">
       </div>
     </div>
 
-    <!-- CONFIRMATION MODAL -->
+    <!-- Not Started Tasks Card -->
+    <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
+      <div>
+        <p class="text-gray-400 text-sm">Not Started</p>
+        <p id="notStartedTasks" class="text-2xl font-bold text-red-500">0</p>
+      </div>
+      <div class="bg-red-600 w-12 h-12 rounded-lg flex items-center justify-center">
+        <img src="static/images/notstarted.png" alt="Not Started" class="h-10 w-10 object-contain">
+      </div>
+    </div>
+
+    <!-- In Progress Tasks Card -->
+    <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
+      <div>
+        <p class="text-gray-400 text-sm">In Progress</p>
+        <p id="inProgressTasks" class="text-2xl font-bold text-yellow-500">0</p>
+      </div>
+      <div class="bg-yellow-500 w-12 h-12 rounded-lg flex items-center justify-center">
+        <img src="static/images/loading.png" alt="In Progress" class="h-14 w-14 object-contain">
+      </div>
+    </div>
+
+    <!-- Completed Tasks Card -->
+    <div class="bg-gray-800 p-5 rounded-lg shadow flex items-center justify-between">
+      <div>
+        <p class="text-gray-400 text-sm">Completed</p>
+        <p id="completedTasks" class="text-2xl font-bold text-green-500">0</p>
+      </div>
+      <div class="bg-green-600 w-12 h-12 rounded-lg flex items-center justify-center">
+        <!-- Checkmark icon for completed tasks -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================
+    PRIORITY FILTER BUTTONS
+    Allows user to filter tasks based on priority
+    ========================== -->
+  <section class="px-6 mb-4 flex items-center gap-4">
+    <div class="flex flex-1 gap-4">
+      <button data-priority="all" class="priority-btn flex-1 bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-lg font-medium">
+        All
+      </button>
+      <button data-priority="high" class="priority-btn flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-medium">
+        High
+      </button>
+      <button data-priority="mid" class="priority-btn flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-lg font-medium">
+        Mid
+      </button>
+      <button data-priority="low" class="priority-btn flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium">
+        Low
+      </button>
+    </div>
+  </section>
+
+  <!-- ==========================
+    TASK COLUMNS
+    Displays tasks in Not Started, In Progress, and Completed columns
+    ========================== -->
+  <section class="p-4 grid grid-cols-3 gap-4 flex-1">
+
+    <!-- Not Started Column -->
+    <div>
+      <h2 class="font-bold text-gray-200 mb-2 ml-2">Not Started</h2>
+      <div id="notStartedList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
+    </div>
+
+    <!-- In Progress Column -->
+    <div>
+      <h2 class="font-bold text-gray-200 mb-2 ml-2">In Progress</h2>
+      <div id="inProgressList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
+    </div>
+
+    <!-- Completed Column -->
+    <div>
+      <h2 class="font-bold text-gray-200 mb-2 ml-2">Completed</h2>
+      <div id="completedList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
+    </div>
+  </section>
+
+  <!-- ==========================
+    FOOTER SECTION
+    Mirrors header style with logo and copyright
+    ========================== -->
+  <footer class="bg-blue-900 border-t border-gray-800 p-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10">
+        <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
+      </div>
+      <div>
+        <p class="text-gray-200 text-sm">@2025 Move It! All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================
+    TOAST NOTIFICATION
+    Shows temporary messages like 'Task deleted'
+    ========================== -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg">
+    Task deleted. <button id="undoBtn" class="text-blue-400 ml-2">Undo</button>
+  </div>
+
+  <!-- ==========================
+    ADD TASK MODAL
+    Modal window for creating or editing tasks
+    ========================== -->
+  <div id="addTaskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-gray-900 p-6 rounded-lg w-96">
+      <h2 id="modalTitle" class="text-xl font-bold mb-4">Add Task</h2>
+      <form id="taskForm" class="space-y-4">
+
+        <!-- Hidden input to store task ID during edit -->
+        <input type="hidden" id="taskId">
+
+        <!-- Task Name Input -->
+        <div>
+          <label class="block text-sm">Task Name</label>
+          <input type="text" id="taskTitle" 
+                 class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2"
+                 placeholder="Add task name">
+          <!-- Inline error message for validation -->
+          <p id="taskTitleError" class="text-red-500 text-sm mt-1"></p>
+        </div>
+
+        <!-- Task Description Input -->
+        <div>
+          <label class="block text-sm">Description</label>
+          <textarea id="taskDescription" rows="4"
+                    class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2 resize-none"
+                    placeholder="Enter a short description"></textarea>
+        </div>
+
+        <!-- Task Priority Selector -->
+        <div>
+          <label class="block text-sm">Priority</label>
+          <select id="taskPriority" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
+            <option value="high">High</option>
+            <option value="mid">Mid</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+
+        <!-- Task Due Date Input -->
+        <div>
+          <label class="block text-sm">Due Date</label>
+          <input type="date" id="taskDueDate" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
+        </div>
+
+        <!-- Task Due Time Input -->
+        <div>
+          <label class="block text-sm">Due Time</label>
+          <input type="time" id="taskDueTime" class="w-full bg-gray-800 text-gray-200 rounded-lg px-3 py-2">
+        </div>
+
+        <!-- Modal Buttons -->
+        <div class="flex justify-end gap-2">
+          <button type="button" id="cancelBtn" class="bg-gray-600 px-4 py-2 rounded-lg">Cancel</button>
+          <button type="submit" id="submitTaskBtn" class="bg-blue-600 px-4 py-2 rounded-lg">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION MODAL -->
   <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-gray-900 p-6 rounded-lg w-96 text-center">
       <p id="confirmMessage" class="text-gray-200 text-lg mb-4">Are you sure?</p>
@@ -237,19 +241,19 @@
     </div>
   </div>
 
-
-    <!-- ==========================
-        LOAD JS FILES IN MODULAR FORM
-        storage.js -> tasks.js -> render.js -> filters.js -> search.js -> toast.js -> modal.js -> main.js
-        ========================== -->
-    <script src="static/js/storage.js"></script>
-    <script src="static/js/tasks.js"></script>
-    <script src="static/js/render.js"></script>
-    <script src="static/js/filters.js"></script>
-    <script src="static/js/search.js"></script>
-    <script src="static/js/toast.js"></script>
-    <script src="static/js/modal.js"></script>
-    <script src="static/js/main.js"></script>
-
-  </body>
-  </html>
+  <!-- ==========================
+    LOAD JS FILES IN MODULAR FORM
+    storage.js -> tasks.js -> render.js -> filters.js -> search.js -> toast.js -> modal.js -> main.js
+    ========================== -->
+  <script src="static/js/storage.js"></script>
+  <script src="static/js/tasks.js"></script>
+  <script src="static/js/render.js"></script>
+  <script src="static/js/filters.js"></script>
+  <script src="static/js/search.js"></script>
+  <script src="static/js/toast.js"></script>
+  <script src="static/js/modal.js"></script>
+  <script src="static/js/main.js"></script>
+  <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+</body>
+</html>
