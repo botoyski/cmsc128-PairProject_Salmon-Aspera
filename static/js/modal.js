@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const addTaskModal = document.getElementById("addTaskModal");
   const cancelBtn = document.getElementById("cancelBtn");
   const submitTaskBtn = document.getElementById("submitTaskBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const logoutModal = document.getElementById("logoutModal");
+  const logoutCancelBtn = document.getElementById("logoutCancelBtn");
+  const logoutOkBtn = document.getElementById("logoutOkBtn");
 
   const modalTitle = document.getElementById("modalTitle");
   const taskIdInput = document.getElementById("taskId");
@@ -47,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---------- VALIDATION ----------
     if (!title) {
-      taskTitleError.textContent = "Please enter a task name.";//validation error message
+      taskTitleError.textContent = "Please enter a task name.";
       taskTitleInput.focus();
       return;
     }
@@ -63,6 +67,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addTaskModal.classList.add("hidden");
     resetModal();
+  });
+
+  // ---------- OPEN MODAL FOR LOGOUT CONFIRMATION ----------
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      logoutModal.classList.remove("hidden");
+    });
+  }
+
+  // Close logout modal on Cancel
+  logoutCancelBtn.addEventListener("click", () => {
+    logoutModal.classList.add("hidden");
+  });
+
+  // Confirm logout on OK
+  logoutOkBtn.addEventListener("click", () => {
+    // Perform logout action (replace with your logout URL/route)
+    window.location.href = "/logout";
+    logoutModal.classList.add("hidden");
   });
 
   // ---------- RESET MODAL ----------

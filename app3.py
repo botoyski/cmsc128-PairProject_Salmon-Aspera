@@ -163,7 +163,6 @@ def api_login():
     data = request.get_json()
     username = data.get("username", "").strip()
     password = data.get("password", "")
-
     user = User.query.filter_by(username=username).first()
 
     if user and check_password_hash(user.password_hash, password):
