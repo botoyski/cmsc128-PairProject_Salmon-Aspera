@@ -90,4 +90,14 @@ function renderTasks() {
     const toggleBtn = document.getElementById(`toggleBtn-${task.id}`);
     if (descEl.scrollHeight > descEl.clientHeight + 5) toggleBtn.classList.remove("hidden");
   });
+
+  // ---------- EMPTY STATE MESSAGE ----------
+  const noTasksMsg = document.getElementById("noTasksMessage");
+  if (noTasksMsg) {
+    if (!filteredTasks || filteredTasks.length === 0) {
+      noTasksMsg.classList.remove("hidden");
+    } else {
+      noTasksMsg.classList.add("hidden");
+    }
+  }
 }

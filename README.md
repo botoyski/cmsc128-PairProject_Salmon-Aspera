@@ -2,81 +2,160 @@
 Full Stack to do list web app
 
 Q: Which backend we chose
-A: 
-    For this project, we used Flask (a lightweight Python web framework) with SQLite as the database.
-    Flask provides the web server and API endpoints.
-    SQLite stores the tasks persistently in a local database file (tasks.db).
-    SQLAlchemy (ORM) is used to map Python classes (Task) to database tables.
+A:
+For this project, we used Flask (a lightweight Python web framework) with SQLite as the database.​
+Flask provides the web server, page routing, and API endpoints.​
+SQLite stores users and tasks persistently in a local database file (app.db).​
+SQLAlchemy (ORM) is used to map Python classes (User, Task) to database tables.​
 
-    We chose Flask + SQLite because it’s:
-        Simple and lightweight for a to-do list application.
-        Easy to set up (no separate database server needed).
-        Portable (just one .db file).
 
+We chose Flask + SQLite because it’s:  
+    Simple and lightweight for a to-do list application.[4]
+    Easy to set up (no separate database server needed).[1]
+    Portable (data is in a single .db file you can move with the project).[1]
 Q: How to run web app
 A:
-    *Optional Steps*
-    Make a virtual environment so that all actions will only store to that environment 
-    [type "python -m venv venv" to your terminal] 
-    NOTE: making a virtual environment in powershell sometimes result in error because of access so its better to run it in cmd
+Optional (but recommended): create a virtual environment so all dependencies are isolated.​
+python -m venv venv
 
-    After the venv file has been created, we can activate the environment
-    [MacOS / Linux: "source venv/bin/activate"]
-    [Windows: "venv\Scripts\activate"]
+Activate the environment:  
+    MacOS / Linux:  source venv/bin/activate  
+    Windows (CMD):  venv\Scripts\activate  
 
-    *Real steps*
-    First we need to install what is needed you can just read the requirements.txt
-    ["pip install -r requirements.txt]
-    Or just type it directly
-    ["pip install flask flask_sqlalchemy flask_cors"]
+Install dependencies (recommended):  
+    pip install -r requirements.txt  
 
-    Make sure the folders look like this so that the paths will not mess up
-    [   project/
-            app.py
-            templates/
-                index.html
-            static/
-                js/
-                images/     
-            tasks.db   (auto-created when app is accessed)   ]
+Or install core packages manually (if needed):  
+    pip install flask flask_sqlalchemy werkzeug gunicorn  
 
-    We can now run app.py
-    ["python app.py"]
+Project structure (simplified):  
+    project/  
+        app3.py  
+        app.db                (auto-created when the app runs)  
+        templates/  
+            index.html  
+            login.html  
+            signup.html  
+            profile.html  
+            recover.html  
+        static/  
+            js/  
+            images/  
 
-    Open app by holding your ctrl button and click
-    [ctrl+click "http://127.0.0.1:5000"]
+Run the app locally:  
+    python app3.py  
 
-Q: API Endpoints
+Then open the app in the browser:  
+    http://127.0.0.1:5000  
+Q: API Endpoints (Tasks)
 A:
-    Get all task
-    [GET /api/tasks]
+Get all tasks for the logged-in user
+GET /api/tasks
 
-    Add new task
-    [POST /api/tasks]
-        Example request body:
-        {
-            "title": "Finish CMSC128 project",
-            "description": "Integrate backend with frontend",
-            "priority": "high",
-            "status": "notStarted",
-            "dueDate": "2025-10-01",
-            "dueTime": "23:59"
-        }
 
-    Edit an existing Task
-    [PUT /api/tasks/<task_id>]
-        Example request body:
-        {
-            "title": "Finish CMSC128 project (updated)",
-            "priority": "mid"
-        }
+Add new task  
+    POST /api/tasks  
+    Example JSON body:  
+    {  
+        "title": "Finish CMSC128 project",  
+        "description": "Integrate backend with frontend",  
+        "priority": "high",  
+        "status": "notStarted",  
+        "dueDate": "2025-10-01",  
+        "dueTime": "23:59"  
+    }  
 
-    Update a task's status only
-    [PATCH /api/tasks/<task_id>/status]
-        Example request body:
-        {
-            "status": "completed"
-        }
+Edit an existing task  
+    PUT /api/tasks/<task_id>  
+    Example JSON body (only send fields you want to change):  
+    {  
+        "title": "Finish CMSC128 project (updated)",  
+        "priority": "mid"  
+    }  
 
-    Delete a task
-    [DELETE /api/tasks/<task_id>]
+Update a task's status only  
+    PATCH /api/tasks/<task_id>/status  
+    Example JSON body:  
+    {  
+        "status": "completed"  
+    }  
+
+Delete a task  
+    DELETE /api/tasks/<task_id>  
+Q: API Endpoints (Auth and Profile)
+A:
+Signup
+POST /signup
+Body JSON:
+{
+"name": "Full Name",
+"username": "user123",
+"password": "secret123",
+"securityQuestion": "Your pet's name?",
+"securityAnswer": "fluffy"
+}
+
+
+Login  
+    POST /login  
+    Body JSON:  
+    {  
+        "username": "user123",  
+        "password": "secret123"  
+    }  
+    On success, returns JSON with redirect: "/index" and sets a session cookie.[5]
+
+Logout  
+    POST /logout  
+    Clears the session and returns redirect: "/login".[5]
+
+Check session  
+    GET /api/check-session  
+    Response JSON:  
+    { "logged_in": true/false, "username": "user123" }  
+
+Profile page (HTML)  
+    GET /profile → renders profile.html for logged-in user.  
+
+Update profile  
+    POST /profile  
+    Body JSON:  
+    {  
+        "name": "New Name",  
+        "username": "new_username",  
+        "password": "optional_new_password"  
+    }  
+
+Get current profile data (for pre-fill)  
+    GET /api/profile  
+    Response JSON (on success):  
+    { "success": true, "name": "Full Name", "username": "user123" }  
+Q: API Endpoints (Password recovery)
+A:
+Start recovery (verify account)
+POST /recover
+Body JSON:
+{
+"action": "verify",
+"usernameInput": "user123"
+}
+On success, returns the stored securityQuestion.
+
+Verify security answer  
+    POST /recover  
+    Body JSON:  
+    {  
+        "action": "verifyAnswer",  
+        "usernameInput": "user123",  
+        "securityAnswer": "fluffy"  
+    }  
+
+Reset password  
+    POST /recover  
+    Body JSON:  
+    {  
+        "action": "reset",  
+        "usernameInput": "user123",  
+        "newPassword": "newSecret",  
+        "repeatPassword": "newSecret"  
+    }
