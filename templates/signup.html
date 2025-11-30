@@ -6,15 +6,15 @@
   This page allows users to create an account for the Move It! productivity app.
   It features a responsive design built with Tailwind CSS, including:
     • Header with navigation
-    • Sign-up form for name, username/email, and password
-    • Connection to auth.js for account creation logic
+    • Sign-up form for name, username/email, password, and security question
+    • Connection to signup.js for account creation logic
     • Footer branding
 
-  The form’s behavior (validation, saving user info to localStorage, etc.)
-  is handled by the external JS file: ../static/js/auth.js
+  The form's behavior (validation, saving user info to backend, etc.)
+  is handled by the external JS file: ../static/js/signup.js
 
   Author: [Your Name]
-  Last Updated: October 2025
+  Last Updated: December 2025
 ==========================================================
 -->
 
@@ -58,8 +58,7 @@
        MAIN SECTION — SIGN UP FORM
        ----------------------------------------------------------
        Centered form card where users enter their name, username/email,
-       and password to create an account. The form sends data
-       to auth.js for processing.
+       password, and security question to create an account.
   ========================================================== -->
   <main class="flex-grow flex items-center justify-center p-6">
     <div class="bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-8">
@@ -99,8 +98,27 @@
                         focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
 
+        <!-- SECURITY QUESTION (NEW) -->
+        <div>
+          <label for="securityQuestion" class="block text-sm font-medium mb-1 text-gray-300">Security Question</label>
+          <input id="securityQuestion" name="securityQuestion" type="text" 
+                 placeholder="e.g., What is your pet's name?" required
+                 class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- SECURITY ANSWER (NEW) -->
+        <div>
+          <label for="securityAnswer" class="block text-sm font-medium mb-1 text-gray-300">Security Answer</label>
+          <input id="securityAnswer" name="securityAnswer" type="text" 
+                 placeholder="Enter your answer" required
+                 class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white 
+                        focus:ring-2 focus:ring-blue-500 outline-none">
+          <p class="text-gray-400 text-xs mt-1">Used for password recovery if you forget your password.</p>
+        </div>
+
         <!-- SUBMIT BUTTON -->
-        <!-- Clicking this will trigger auth.js to save user credentials -->
+        <!-- Clicking this will trigger signup.js to save user credentials -->
         <button type="submit"
                 class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold 
                        transition-all duration-300">
@@ -125,15 +143,15 @@
        Displays branding and copyright.
   ========================================================== -->
   <footer class="text-center text-gray-500 text-sm py-4 border-t border-gray-800">
-    © 2025 Move It! — Let’s Move It, Move It!
+    © 2025 Move It! — Let's Move It, Move It!
   </footer>
 
   <!-- ==========================================================
        EXTERNAL SCRIPT
        ----------------------------------------------------------
-       Connects this HTML page to auth.js, which handles:
+       Connects this HTML page to signup.js, which handles:
          - User registration logic
-         - Local storage management
+         - Backend communication
          - Validation and redirection
   ========================================================== -->
   <script src="{{ url_for('static', filename='js/signup.js') }}"></script>

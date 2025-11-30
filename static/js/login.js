@@ -4,7 +4,7 @@
 // Description:
 // Handles login authentication using Flask backend via fetch().
 // Sends JSON credentials to /login and redirects on success.
-// Keeps same UX as before (alert messages + redirect).
+// Uses modal instead of alerts for better UX.
 // ======================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = passwordInput.value;
 
     if (!username || !password) {
-      showMessage("⚠️ Please fill out all fields.", "text-red-400");
+      showMessage("⚠️ Please fill out all fields.", "text-red-400", true);
       return;
     }
 
@@ -48,7 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.removeItem("rememberedUsername");
         }
 
-        showMessage("✅ " + data.message, "text-green-400");
+        // Show success message without OK button (auto-close)
+        showMessage("✅ " + data.message, "text-green-400", false);
 
         if (data.redirect) {
           setTimeout(() => {
@@ -56,21 +57,40 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 1000);
         }
       } else {
-        showMessage("⚠️ " + data.message, "text-red-400");
+        showMessage("⚠️ " + data.message, "text-red-400", true);
       }
     } catch (err) {
       console.error("Login error:", err);
-      showMessage("❌ Server error. Please try again later.", "text-red-400");
+      showMessage("❌ Server error. Please try again later.", "text-red-400", true);
     }
   });
 });
 
-function showMessage(msg, color) {
-  const message = document.getElementById("loginMessage");
-  if (message) {
-    message.className = `text-center text-sm mt-4 ${color}`;
+function showMessage(msg, color, showButton) {
+  const modal = document.getElementById('loginModal');
+  const message = document.getElementById('loginModalMessage');
+  const closeBtn = document.getElementById('loginModalClose');
+  
+  if (modal && message && closeBtn) {
     message.textContent = msg;
+    message.className = `text-gray-300 mb-5 ${color}`;
+    modal.classList.remove('hidden');
+    
+    // Show or hide the OK button based on the showButton parameter
+    if (showButton) {
+      closeBtn.classList.remove('hidden');
+      closeBtn.onclick = () => {
+        modal.classList.add('hidden');
+      };
+    } else {
+      closeBtn.classList.add('hidden');
+      // Auto-hide modal after showing success message
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 1500);
+    }
   } else {
+    // Fallback to alert if modal elements not found
     alert(msg);
   }
 }
