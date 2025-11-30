@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------
 // Description:
 // Handles user account creation by sending form data to Flask backend.
+// Includes security question and answer for password recovery.
 // Replaces localStorage logic with fetch() to /signup (JSON API).
 // Maintains same design and UX (alert + redirect).
 // =====================================================================
@@ -17,9 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const name = document.getElementById("name").value.trim();
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+    const securityQuestion = document.getElementById("securityQuestion").value.trim();
+    const securityAnswer = document.getElementById("securityAnswer").value.trim();
 
-    if (!name || !username || !password) {
-      message.textContent = "Please fill out all fields.";
+    if (!name || !username || !password || !securityQuestion || !securityAnswer) {
+      message.textContent = "⚠️ Please fill out all fields.";
       message.className = "text-red-400 text-center text-sm mt-4";
       return;
     }
@@ -28,7 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch("/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, username, password }),
+        body: JSON.stringify({ 
+          name, 
+          username, 
+          password,
+          securityQuestion,
+          securityAnswer
+        }),
       });
 
       const data = await response.json();
@@ -36,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.status === "success") {
         message.textContent = "✅ Account created! Redirecting to login...";
         message.className = "text-green-400 text-center text-sm mt-4";
-        
+
         // Clear form fields
         form.reset();
 
@@ -45,14 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
           window.location.href = data.redirect || "/login";
         }, 1000);
       } else {
-        message.textContent = data.message || "Signup failed.";
+        message.textContent = data.message || "❌ Signup failed.";
         message.className = "text-red-400 text-center text-sm mt-4";
       }
     } catch (err) {
       console.error("Signup error:", err);
-      message.textContent = "Server error. Please try again later.";
+      message.textContent = "❌ Server error. Please try again later.";
       message.className = "text-red-400 text-center text-sm mt-4";
     }
   });
 });
-

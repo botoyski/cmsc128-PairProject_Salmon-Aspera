@@ -8,20 +8,47 @@
   <!-- Tailwind CSS CDN for utility-first styling -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   
+  <!-- ==========================
+    SESSION CHECK SCRIPT (MOVED TO HEAD)
+    Checks if user is still logged in - runs immediately before page renders
+    ========================== -->
+  <script>
+    // Hide page content immediately until session is verified
+    document.documentElement.style.visibility = 'hidden';
+    
+    // Check if user is still logged in when page loads (handles back button)
+    (async function() {
+      try {
+        const response = await fetch("/api/check-session");
+        const data = await response.json();
+        
+        if (!data.logged_in) {
+          // User is not logged in, redirect to login page
+          window.location.replace("/login");
+        } else {
+          // User is logged in, show the page
+          document.documentElement.style.visibility = 'visible';
+        }
+      } catch (err) {
+        console.error("Session check error:", err);
+        window.location.replace("/login");
+      }
+    })();
+  </script>
 </head>
 <body class="bg-gray-900 text-white flex flex-col min-h-screen">
 
   <!-- Navigation Bar -->
-  <nav class="bg-blue-800 border-b border-gray-800 p-4 flex items-center justify-between">
+  <nav class="bg-blue-900 border-b border-gray-800 px-8 py-4 flex items-center justify-between shadow-md">
     <div class="flex items-center gap-3">
       <div class="h-8 w-8">
         <img src="static/images/logo.png" alt="Move It Logo" class="h-full w-full object-contain rounded-lg">
       </div>
-      <h1 class="font-bold text-lg">Move It!</h1>
+      <h1 class="font-bold text-xl text-white">Move It!</h1>
     </div>
-    <div class="flex gap-6">
-      <a href="{{ url_for('index_page') }}" class="text-white hover:text-blue-300">Dashboard</a>
-      <a href="{{ url_for('profile_page') }}" class="text-white hover:text-blue-300">Profile</a>
+    <div class="flex gap-6 items-center">
+      <a href="{{ url_for('index_page') }}" class="text-white hover:text-blue-300 font-semibold">Dashboard</a>
+      <a href="{{ url_for('profile_page') }}" class="text-gray-300 hover:text-white">Profile</a>
       <button id="logoutBtn" 
               class="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-lg font-medium transition duration-300">
         Logout
@@ -230,13 +257,35 @@
     </div>
   </div>
 
-  <!-- CONFIRMATION MODAL -->
+  <!-- ==========================
+    CONFIRMATION MODAL
+    For deleting tasks
+    ========================== -->
   <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-gray-900 p-6 rounded-lg w-96 text-center">
       <p id="confirmMessage" class="text-gray-200 text-lg mb-4">Are you sure?</p>
       <div class="flex justify-center gap-4">
         <button id="confirmCancelBtn" class="bg-gray-600 px-4 py-2 rounded-lg">Cancel</button>
         <button id="confirmOkBtn" class="bg-red-600 px-4 py-2 rounded-lg text-white">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================
+    LOGOUT CONFIRMATION MODAL
+    Asks user to confirm before logging out
+    ========================== -->
+  <div id="logoutModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-gray-800 rounded-lg p-6 max-w-sm w-full mx-4 shadow-xl text-center">
+      <h3 class="text-lg font-semibold mb-3 text-white">Confirm Logout</h3>
+      <p class="text-gray-300 mb-5">Do you want to log out?</p>
+      <div class="flex gap-3">
+        <button id="logoutCancelBtn" class="flex-1 bg-gray-600 hover:bg-gray-700 py-2 rounded-lg font-semibold transition">
+          Cancel
+        </button>
+        <button id="logoutConfirmBtn" class="flex-1 bg-red-600 hover:bg-red-700 py-2 rounded-lg font-semibold transition">
+          Logout
+        </button>
       </div>
     </div>
   </div>
