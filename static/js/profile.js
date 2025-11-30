@@ -4,29 +4,38 @@
 // Description:
 // Handles updating user profile via Flask backend (/profile POST).
 // Ensures form fields are validated and gives user feedback.
+// Also loads existing name/username via /api/profile on page load.
 // ======================================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Check user session validity
-  try {
-    const res = await fetch("/profile", { method: "GET" });
-    if (res.redirected) {
-      window.location.href = res.url;
-      return;
-    }
-  } catch (err) {
-    console.error("Session check failed:", err);
-  }
-
   const form = document.getElementById("profileForm");
   const message = document.getElementById("profileMessage");
+  const nameInput = document.getElementById("profileName");
+  const usernameInput = document.getElementById("profileUsername");
+
   if (!form) return;
 
+  // 1) Load existing profile data and pre-fill inputs
+  try {
+    const res = await fetch("/api/profile");
+    const data = await res.json();
+
+    if (data.success) {
+      if (nameInput) nameInput.value = data.name || "";
+      if (usernameInput) usernameInput.value = data.username || "";
+    } else {
+      console.error("Failed to load profile:", data.message);
+    }
+  } catch (err) {
+    console.error("Error loading profile:", err);
+  }
+
+  // 2) Handle profile update submit
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("profileName").value.trim();
-    const username = document.getElementById("profileUsername").value.trim();
+    const name = nameInput ? nameInput.value.trim() : "";
+    const username = usernameInput ? usernameInput.value.trim() : "";
     const password = document.getElementById("profilePassword").value.trim();
 
     if (!name || !username) {

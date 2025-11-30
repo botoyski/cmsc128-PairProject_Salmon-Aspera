@@ -60,18 +60,28 @@
     HEADER SECTION
     Contains search bar, and add task button
     ========================== -->
-  <!-- Header Section -->
-  <header class="bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between gap-4">
-    <div class="flex-1 max-w-lg mx-auto">
-      <input id="searchInput" type="text" placeholder="Search tasks..."
-             class="w-full bg-white-800 text-black rounded-lg px-4 py-2 focus:outline-none">
-    </div>
-    <div class="flex items-center mr-4">
-      <button id="addTaskBtn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg">
-        + Add New Task
-      </button>
-    </div>
-  </header>
+ <header class="bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between gap-4">
+  <!-- Left: Greeting -->
+  <div class="flex-1">
+    <p class="text-gray-300 text-sm">
+      Let's Move It, <span id="headerUsername" class="font-semibold text-white">User</span>!
+    </p>
+  </div>
+
+  <!-- Center: Search -->
+  <div class="flex-1 max-w-md">
+    <input id="searchInput" type="text" placeholder="Search tasks..."
+           class="w-full bg-white-800 text-black rounded-lg px-4 py-2 focus:outline-none">
+  </div>
+
+  <!-- Right: Add Task -->
+  <div class="flex-1 flex justify-end">
+    <button id="addTaskBtn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg">
+      + Add New Task
+    </button>
+  </div>
+</header>
+
 
   <!-- ==========================
     STATS SECTION
@@ -157,6 +167,9 @@
     <!-- Not Started Column -->
     <div>
       <h2 class="font-bold text-gray-200 mb-2 ml-2">Not Started</h2>
+      <p id="noTasksMessage" class="text-gray-400 text-center mb-2 hidden">
+        You don't have tasks yet. Create a new one!
+      </p>
       <div id="notStartedList" class="bg-gray-800 p-4 rounded-lg min-h-[200px]"></div>
     </div>
 
